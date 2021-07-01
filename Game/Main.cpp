@@ -1,5 +1,4 @@
-#include "helper.h"
-#include "point.h"
+#include "core.h"
 #include <iostream>
 #include <vector>
 
@@ -62,4 +61,15 @@ void Draw(Core::Graphics& graphics)
 
 		graphics.DrawLine(p1.x, p1.y, p2.x, p2.y);
 	}
+}
+
+int main()
+{
+	char name[] = "CSC196";
+	Core::Init(name, 800, 600);
+	Core::RegisterUpdateFn(Update);
+	Core::RegisterDrawFn(Draw);
+
+	Core::GameLoop();
+	Core::Shutdown();
 }
