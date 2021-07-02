@@ -27,5 +27,10 @@ namespace nc
 
 			return (red | green << 8 | blue << 16);
 		}
+
+		static const Color white;
+		static const Color red;
+		static const Color green;
+		static const Color blue;
 	};
 }

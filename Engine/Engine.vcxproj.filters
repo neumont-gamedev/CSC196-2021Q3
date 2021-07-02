@@ -12,6 +12,10 @@
     <Filter Include="Source\Math">
       <UniqueIdentifier>{bd62dec0-e9fe-4a7a-b6c4-eaa50969e3d2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
     <Filter Include="Source\Graphics">
       <UniqueIdentifier>{c082d4e9-8220-48f6-a653-be84dd8011cc}</UniqueIdentifier>
     </Filter>
@@ -28,6 +32,9 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Math\Color.cpp">
+      <Filter>Source\Math</Filter>
+    </ClCompile>
     <ClCompile Include="Graphics\Shape.cpp">
       <Filter>Source\Graphics</Filter>
     </ClCompile>
