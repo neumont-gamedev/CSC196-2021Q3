@@ -9,7 +9,7 @@ nc::Vector2 position{ 400, 300 };
 std::vector<nc::Vector2> points = { { -5, -5 }, { 5, -5 }, { 0, 5 }, { -5, -5 } };
 nc::Shape shape{ points, nc::Color{ 0, 1, 0 } };
 const float speed = 5;
-
+float timer = 0;
 
 bool Update(float dt)
 {

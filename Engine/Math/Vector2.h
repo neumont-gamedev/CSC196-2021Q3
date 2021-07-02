@@ -23,16 +23,4 @@ namespace nc
 
 		Vector2& operator *= (float s) { x *= s; y *= s; return *this; }
 	};
-
-	inline float Vector2::Length()
-	{
-		return std::sqrt(x * x + y * y);
-	}
-
-	inline float Vector2::LengthSqr()
-	{
-		return (x * x + y * y);
-	}
-
-
 }

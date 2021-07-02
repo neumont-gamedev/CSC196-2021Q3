@@ -32,9 +32,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Math\Color.cpp">
-      <Filter>Source\Math</Filter>
-    </ClCompile>
     <ClCompile Include="Graphics\Shape.cpp">
       <Filter>Source\Graphics</Filter>
     </ClCompile>
