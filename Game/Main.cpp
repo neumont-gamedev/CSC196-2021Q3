@@ -13,8 +13,6 @@ const float speed = 5;
 float timer = 0;
 nc::ParticleSystem particleSystem;
 
-nc::ParticleSystem ps;
-
 bool Update(float dt)
 {
 	bool quit = Core::Input::IsPressed(Core::Input::KEY_ESCAPE);
@@ -48,19 +46,18 @@ void Draw(Core::Graphics& graphics)
 {
 	float scale = 1 + (std::sin(timer) + 1) * 2;
 	shape.Draw(graphics, position);
+	particleSystem.Draw(graphics);
 }
 
 int main()
 {
-	ps.Startup();
 
 	char name[] = "CSC196";
 	Core::Init(name, 800, 600);
 	Core::RegisterUpdateFn(Update);
 	Core::RegisterDrawFn(Draw);
-
 	particleSystem.Startup();
-
 	Core::GameLoop();
 	Core::Shutdown();
+	particleSystem.Shutdown();
 }
