@@ -1,4 +1,5 @@
 #include "ParticleSystem.h"
+#include "../Math/Random.h"
 
 namespace nc
 {
@@ -35,7 +36,7 @@ namespace nc
 			}
 		}
 	}
-
+	
 	void ParticleSystem::Draw(Core::Graphics& graphics)
 	{
 		for (const Particle& particle : particles)
@@ -50,6 +51,8 @@ namespace nc
 
 	void ParticleSystem::Create(const Vector2& position, size_t count, float lifetime, const Color& color, float speed)
 	{
+		std::vector<nc::Color> colors{ nc::Color::white, nc::Color::red, nc::Color::green, nc::Color::blue, nc::Color::yellow, nc::Color::purple };
+
 		for (size_t i = 0; i < count; i++)
 		{
 			auto particle = std::find_if(particles.begin(), particles.end(), Particle::IsNotAcive);

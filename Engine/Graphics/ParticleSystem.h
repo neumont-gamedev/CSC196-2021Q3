@@ -5,17 +5,19 @@
 
 namespace nc
 {
-	struct Particle
+	class ParticleSystem
 	{
-		Vector2 position;
-		Vector2 prevPosition;
-		Vector2 velocity;
-		Color color;
-		float lifetime;
+	private:
+		struct Particle
+		{
+			Vector2 position;
+			Vector2 prevPosition;
+			Vector2 velocity;
+			Color color;
+			float lifetime;
 		bool isActive{ false };
 
-		static bool IsNotAcive(Particle particle) { return particle.isActive == false; }
-	};
+		};
 
 	class ParticleSystem
 	{
@@ -26,7 +28,6 @@ namespace nc
 		void Update(float dt);
 		void Draw(Core::Graphics& graphics);
 
-		void Create(const Vector2& position, size_t count, float lifetime, const Color& color, float speed);
 
 	private:
 		std::vector<Particle> particles;
