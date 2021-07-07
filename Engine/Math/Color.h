@@ -28,9 +28,16 @@ namespace nc
 			return (red | green << 8 | blue << 16);
 		}
 
+		//static const float count = 5;
+
 		static const Color white;
 		static const Color red;
 		static const Color green;
 		static const Color blue;
+		static const Color purple;
+		static const Color cyan;
+		static const Color orange;
+		static const Color yellow;
+		static const Color black;
 	};
 }
