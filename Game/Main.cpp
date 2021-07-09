@@ -2,20 +2,22 @@
 #include "Math/Vector2.h"
 #include "Math/Color.h"
 #include "Math/Random.h"
+#include "Math/MathUtils.h"
 #include "Graphics/Shape.h"
 #include "Graphics/ParticleSystem.h"
 #include <iostream>
 #include <vector>
 #include <string>
 
-nc::Vector2 position{ 400, 300 };
+
 std::vector<nc::Vector2> points = { { -5, -5 }, { 5, -5 }, { 0, 10 }, { -5, -5 } };
 nc::Shape shape{ points, nc::Color{ 0, 1, 0 } };
+nc::Transform transform{ nc::Vector2{400, 300}, 0, 3 };
+
 const float speed = 300;
 float timer = 0;
 nc::ParticleSystem particleSystem;
 nc::Vector2 psPosition;
-float angle = 0;
 
 float deltaTime;
 float gameTime = 0;
@@ -43,13 +45,16 @@ bool Update(float dt)
 	particleSystem.Update(dt);
 
 	float thrust = 0;
-	if (Core::Input::IsPressed('A')) angle -= 5 * dt;
-	if (Core::Input::IsPressed('D')) angle += 5 * dt;
+	if (Core::Input::IsPressed('A')) transform.rotation -= 5 * dt;
+	if (Core::Input::IsPressed('D')) transform.rotation += 5 * dt;
 	if (Core::Input::IsPressed('W')) thrust = speed;
 	
 	//if (Core::Input::IsPressed('S')) input.y =  1;
-	position += nc::Vector2::Rotate(nc::Vector2::up, angle) * thrust * dt;
-	particleSystem.Create(position, 3, 2, nc::Color::white, 50);
+	transform.position += nc::Vector2::Rotate(nc::Vector2::down, transform.rotation) * thrust * dt;
+	transform.position.x = nc::Wrap(transform.position.x, 0.0f, 800.0f);
+	transform.position.y = nc::Wrap(transform.position.y, 0.0f, 600.0f);
+
+	particleSystem.Create(transform.position, 3, 2, nc::Color::white, 50);
 
 	return quit;
 }
@@ -57,16 +62,16 @@ bool Update(float dt)
 void Draw(Core::Graphics& graphics)
 {
 	float scale = 1 + (std::sin(timer) + 1) * 2;
-	shape.Draw(graphics, position, angle, 3);
+	shape.Draw(graphics, transform);
 	particleSystem.Draw(graphics);
 
-	graphics.SetColor(nc::Color{ 1, 1, 1 });
+	nc::Color color = nc::Lerp(nc::Color::green, nc::Color::orange, psPosition.x / 800);
+	graphics.SetColor(color);
+
 	graphics.DrawString(10, 10, std::to_string(deltaTime).c_str());
 	graphics.DrawString(10, 20, std::to_string(gameTime).c_str());
 	graphics.DrawString(10, 30, std::to_string(1 / deltaTime).c_str());
-
 	graphics.DrawString(10, 40, std::to_string(psPosition.Length()).c_str());
-
 }
 
 int main()
