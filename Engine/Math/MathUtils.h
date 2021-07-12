@@ -2,10 +2,10 @@
 
 namespace nc
 {
-	const float Pi = 3.14159265359f;		// 180
-	const float TwoPi = 6.28318530718f;		// 360
-	const float HalfPi = 1.57079632679f;	// 90
-	const float QuarterPi = 0.78539816339;	// 45
+	const float Pi			= 3.14159265359f;		// 180
+	const float TwoPi		= 6.28318530718f;		// 360
+	const float HalfPi		= 1.57079632679f;		// 90
+	const float QuarterPi	= 0.78539816339f;		// 45
 
 	inline float RadToDeg(float radians)
 	{
