@@ -15,7 +15,7 @@ namespace nc
 		void Draw(Core::Graphics& graphics, const Vector2& position, float angle, float scale = 1);
 		void Draw(Core::Graphics& graphics, const Transform& transform);
 
-	private:
+	public:
 		std::vector<Vector2> points;
 		Color color;
 	};

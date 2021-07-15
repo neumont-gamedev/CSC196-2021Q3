@@ -7,8 +7,6 @@
 #include <string>
 
 std::vector<nc::Vector2> points = { { -5, -5 }, { 5, -5 }, { 0, 10 }, { -5, -5 } };
-nc::Shape shape{ points, nc::Color{ 0, 1, 0 } };
-nc::Shape shape2{ points, nc::Color{ 1, 1, 0 } };
 
 float timer = 0;
 nc::Vector2 psPosition;
@@ -44,6 +42,9 @@ bool Update(float dt)
 	}
 	//engine.Get<nc::ParticleSystem>()->Create(transform.position, 3, 2, nc::Color::white, 50);
 
+	scene.GetActor<Player>()->shape->color = nc::Color{ nc::Random(), nc::Random(), nc::Random() };
+	scene.GetActor<Enemy>()->shape->color = nc::Color{ nc::Random(), nc::Random(), nc::Random() };
+
 	scene.Update(dt);
 ;	engine.Update(dt);
 
@@ -66,19 +67,51 @@ void Draw(Core::Graphics& graphics)
 
 void Init()
 {
+	std::shared_ptr<nc::Shape> shape1 = std::make_shared<nc::Shape>(points, nc::Color{ 0, 1, 0 });
+	std::shared_ptr<nc::Shape> shape2 = std::make_shared<nc::Shape>(points, nc::Color{ 1, 1, 0 });
+
 	engine.Get<nc::AudioSystem>()->AddAudio("explosion", "explosion.wav");
-	scene.AddActor(new Player{ nc::Transform{ nc::Vector2{400, 300}, 0, 3 }, &shape, 300 });
-	for (size_t i = 0; i < 100; i++)
+	scene.AddActor(std::make_unique<Player>(nc::Transform( nc::Vector2(400.0f, 300.0f), 0.0f, 3.0f ), shape1, 300.0f ));
+	for (size_t i = 0; i < 10; i++)
 	{
-		scene.AddActor(new Enemy{ nc::Transform{ nc::Vector2{nc::RandomRange(0.0f, 800.0f), nc::RandomRange(0.0f, 600.0f)}, nc::RandomRange(0.0f, nc::TwoPi), 2 }, &shape2, 300 });
+		scene.AddActor(std::make_unique<Enemy>(nc::Transform{ nc::Vector2{nc::RandomRange(0.0f, 800.0f), nc::RandomRange(0.0f, 600.0f)}, nc::RandomRange(0.0f, nc::TwoPi), 2.0f }, shape2, 300.0f ));
 	}
 }
 
+class A
+{
+public:
+	virtual void Display() { std::cout << "A\n"; }
+};
+
+class B : public A
+{
+public:
+	void Display() override { std::cout << "B\n"; }
+	void BFunc() { std::cout << "B Func\n"; }
+};
+
+class C : public A
+{
+public:
+	void Display() override { std::cout << "C\n"; }
+	void CFunc() { std::cout << "C Func\n"; }
+};
+
 int main()
 {
-	std::cout << "start\n";
-	char name[] = "CSC196";
+	A* a = new A;
+	A* b = new B;
+	C* c = new C;
 
+	a->Display();
+	b->Display();
+	dynamic_cast<C*>(b)->CFunc();
+	c->Display();
+
+	//system("pause");
+
+	char name[] = "CSC196";
 	Core::Init(name, 800, 600, 60);
 	Core::RegisterUpdateFn(Update);
 	Core::RegisterDrawFn(Draw);
