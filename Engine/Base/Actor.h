@@ -18,8 +18,10 @@ namespace nc
 		virtual void Draw(Core::Graphics& graphics);
 
 	public:
+		bool destroy{ false };
+
 		Transform transform;
 		std::shared_ptr<Shape> shape;
-		Scene* scene;
+		Scene* scene{ nullptr };
 	};
 }

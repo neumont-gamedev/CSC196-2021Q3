@@ -9,6 +9,20 @@ namespace nc
 		{
 			actor->Update(dt);
 		}
+
+		// destroy actor
+		auto iter = actors.begin();
+		while (iter != actors.end())
+		{
+			if ((*iter)->destroy)
+			{
+				iter = actors.erase(iter);
+			}
+			else
+			{
+				iter++;
+			}
+		}
 	}
 
 	void Scene::Draw(Core::Graphics& graphics)
@@ -23,5 +37,15 @@ namespace nc
 	{
 		actor.get()->scene = this;
 		actors.push_back(std::move(actor));
+	}
+
+	void Scene::RemoveActor(Actor* actor)
+	{
+
+	}
+
+	void Scene::RemoveAllActors()
+	{
+		actors.clear();
 	}
 }

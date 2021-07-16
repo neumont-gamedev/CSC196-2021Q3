@@ -1,6 +1,7 @@
 #include "Engine.h"
 #include "Actors/Player.h"
 #include "Actors/Enemy.h"
+#include "Actors/Projectile.h"
 
 #include <iostream>
 #include <vector>
@@ -63,15 +64,20 @@ void Draw(Core::Graphics& graphics)
 	graphics.DrawString(10, 20, std::to_string(gameTime).c_str());
 	graphics.DrawString(10, 30, std::to_string(1 / deltaTime).c_str());
 	graphics.DrawString(10, 40, std::to_string(psPosition.Length()).c_str());
+	graphics.DrawString(10, 50, std::to_string(scene.GetActors<Projectile>().size()).c_str());
 }
 
 void Init()
 {
+	std::shared_ptr<nc::Shape> shape = std::make_shared<nc::Shape>();
+	shape->Load("shape.txt");
+
+
 	std::shared_ptr<nc::Shape> shape1 = std::make_shared<nc::Shape>(points, nc::Color{ 0, 1, 0 });
 	std::shared_ptr<nc::Shape> shape2 = std::make_shared<nc::Shape>(points, nc::Color{ 1, 1, 0 });
 
 	engine.Get<nc::AudioSystem>()->AddAudio("explosion", "explosion.wav");
-	scene.AddActor(std::make_unique<Player>(nc::Transform( nc::Vector2(400.0f, 300.0f), 0.0f, 3.0f ), shape1, 300.0f ));
+	scene.AddActor(std::make_unique<Player>(nc::Transform( nc::Vector2(400.0f, 300.0f), 0.0f, 3.0f ), shape, 300.0f ));
 	for (size_t i = 0; i < 10; i++)
 	{
 		scene.AddActor(std::make_unique<Enemy>(nc::Transform{ nc::Vector2{nc::RandomRange(0.0f, 800.0f), nc::RandomRange(0.0f, 600.0f)}, nc::RandomRange(0.0f, nc::TwoPi), 2.0f }, shape2, 300.0f ));
@@ -112,7 +118,7 @@ int main()
 	//system("pause");
 
 	char name[] = "CSC196";
-	Core::Init(name, 800, 600, 60);
+	Core::Init(name, 800, 600, 120);
 	Core::RegisterUpdateFn(Update);
 	Core::RegisterDrawFn(Draw);
 
