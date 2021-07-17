@@ -38,7 +38,7 @@ namespace nc
 		{
 			success = true;
 
-			color = Color::white;
+			stream >> color;
 
 			// read number of points
 			std::string line;

@@ -1,5 +1,6 @@
 #pragma once
 #include "core.h"
+#include <iostream>
 
 namespace nc
 {
@@ -30,7 +31,7 @@ namespace nc
 			return (red | green << 8 | blue << 16);
 		}
 
-		//static const float count = 5;
+		friend std::istream& operator >> (std::istream& stream, Color& c);
 
 		static const Color white;
 		static const Color red;

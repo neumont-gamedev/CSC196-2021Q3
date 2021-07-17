@@ -41,10 +41,10 @@ bool Update(float dt)
 
 		engine.Get<nc::AudioSystem>()->PlayAudio("explosion");
 	}
-	//engine.Get<nc::ParticleSystem>()->Create(transform.position, 3, 2, nc::Color::white, 50);
+	
 
-	scene.GetActor<Player>()->shape->color = nc::Color{ nc::Random(), nc::Random(), nc::Random() };
-	scene.GetActor<Enemy>()->shape->color = nc::Color{ nc::Random(), nc::Random(), nc::Random() };
+	//scene.GetActor<Player>()->shape->color = nc::Color{ nc::Random(), nc::Random(), nc::Random() };
+	//scene.GetActor<Enemy>()->shape->color = nc::Color{ nc::Random(), nc::Random(), nc::Random() };
 
 	scene.Update(dt);
 ;	engine.Update(dt);
@@ -69,9 +69,10 @@ void Draw(Core::Graphics& graphics)
 
 void Init()
 {
+	scene.engine = &engine;
+
 	std::shared_ptr<nc::Shape> shape = std::make_shared<nc::Shape>();
 	shape->Load("shape.txt");
-
 
 	std::shared_ptr<nc::Shape> shape1 = std::make_shared<nc::Shape>(points, nc::Color{ 0, 1, 0 });
 	std::shared_ptr<nc::Shape> shape2 = std::make_shared<nc::Shape>(points, nc::Color{ 1, 1, 0 });
