@@ -18,6 +18,7 @@
 #include "Base/Actor.h"
 #include "Base/Scene.h"
 
+#define NOMINMAX
 #include "core.h"
 #include <vector>
 #include <memory>

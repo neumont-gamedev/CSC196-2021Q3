@@ -1,6 +1,6 @@
 #include "Scene.h"
 #include "Actor.h"
-
+#include <algorithm>
 namespace nc
 {
 	void Scene::Update(float dt)
