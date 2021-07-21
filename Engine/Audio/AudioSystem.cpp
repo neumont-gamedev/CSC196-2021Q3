@@ -9,7 +9,7 @@ namespace nc
 		FMOD::System_Create(&fmodSystem);
 
 		void* extradriverdata = nullptr;
-		fmodSystem->init(32, FMOD_INIT_NORMAL, extradriverdata);
+		FMOD_RESULT result = fmodSystem->init(32, FMOD_INIT_NORMAL, extradriverdata);
 	}
 
 	void AudioSystem::Shutdown()
