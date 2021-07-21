@@ -20,5 +20,10 @@ void Enemy::OnCollision(Actor* actor)
 		destroy = true;
 		scene->engine->Get<nc::ParticleSystem>()->Create(transform.position, 200, 1, nc::Color::white, 50);
 		scene->engine->Get<nc::AudioSystem>()->PlayAudio("explosion");
+
+		nc::Event event;
+		event.name = "AddPoints";
+		scene->engine->Get<nc::EventSystem>()->Notify(event);
+
 	}
 }

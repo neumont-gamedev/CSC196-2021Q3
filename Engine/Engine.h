@@ -14,13 +14,18 @@
 // graphics
 #include "Graphics/Shape.h"
 
+// framework
+#include "Framework/EventSystem.h"
+
 // objects
 #include "Base/Actor.h"
 #include "Base/Scene.h"
 
+#define NOMINMAX
 #include "core.h"
 #include <vector>
 #include <memory>
+#include <algorithm>
 
 namespace nc
 {
