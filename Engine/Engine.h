@@ -36,6 +36,7 @@ namespace nc
 		void Shutdown();
 
 		void Update(float dt);
+		void Draw(Core::Graphics& graphics);
 
 		template<typename T>
 		T* Get();

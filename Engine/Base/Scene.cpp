@@ -22,10 +22,8 @@ namespace nc
 
 				nc::Vector2 dir = actors[i]->transform.position - actors[j]->transform.position;
 				float distance = dir.Length();
-				if (distance < 30)
+				if (distance < actors[i]->GetRadius() + actors[j]->GetRadius())
 				{
-
-
 					actors[i]->OnCollision(actors[j].get());
 					actors[j]->OnCollision(actors[i].get());
 				}

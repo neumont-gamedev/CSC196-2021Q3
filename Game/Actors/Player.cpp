@@ -28,7 +28,10 @@ void Player::Update(float dt)
 
 		nc::Transform t = transform;
 		t.scale = 0.5f;
-		scene->AddActor(std::make_unique<Projectile>(t, shape, 600.0f));
+
+		std::unique_ptr<Projectile> projectile = std::make_unique<Projectile>(t, shape, 600.0f);
+		projectile->tag = "Player";
+		scene->AddActor(std::move(projectile));
 	}
 
 	scene->engine->Get<nc::ParticleSystem>()->Create(transform.position, 3, 2, nc::Color::white, 50);
@@ -44,6 +47,7 @@ void Player::OnCollision(Actor* actor)
 
 		nc::Event event;
 		event.name = "PlayerDead";
+		event.data = std::string("yes i'm dead!");
 		scene->engine->Get<nc::EventSystem>()->Notify(event);
 	}
 }

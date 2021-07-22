@@ -1,4 +1,5 @@
 #include "Game.h"
+#include <variant>
 
 Game game;
 
@@ -31,9 +32,33 @@ void Draw(Core::Graphics& graphics)
 int inc(int i) { return ++i; }
 int dec(int i) { return --i; }
 
+union Data
+{
+	int i;
+	char str[5];
+	bool b;
+};
 
 int main()
 {
+	Data data = { 0 };
+	data.b = true;
+	data.i = 534;
+	data.str[0] = '#';
+
+	std::cout << data.i << std::endl;
+	std::cout << data.b << std::endl;
+	std::cout << data.str << std::endl;
+
+	std::variant<int, std::string, float, bool> var;
+	var = 20;
+	var = true;
+
+	//std::cout << std::get<int>(var) << std::endl;
+	std::cout << std::get<bool>(var) << std::endl;
+	std::cout << std::get<3>(var) << std::endl;
+
+
 	//int (*operation)(int);
 	//operation = &dec;
 	//std::cout << operation(5) << std::endl;

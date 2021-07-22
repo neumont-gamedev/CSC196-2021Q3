@@ -24,4 +24,3 @@ namespace nc
 	};
 }
 
-extern nc::AudioSystem audioSystem;

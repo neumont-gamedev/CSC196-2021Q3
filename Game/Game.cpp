@@ -49,9 +49,9 @@ void Game::Update(float dt)
 		std::shared_ptr<nc::Shape> shape2 = std::make_shared<nc::Shape>(points, nc::Color{ 1, 1, 0 });
 
 		scene->AddActor(std::make_unique<Player>(nc::Transform(nc::Vector2(400.0f, 300.0f), 0.0f, 3.0f), shape, 300.0f));
-		for (size_t i = 0; i < 10; i++)
+		for (size_t i = 0; i < 2; i++)
 		{
-			scene->AddActor(std::make_unique<Enemy>(nc::Transform{ nc::Vector2{nc::RandomRange(0.0f, 800.0f), nc::RandomRange(0.0f, 600.0f)}, nc::RandomRange(0.0f, nc::TwoPi), 2.0f }, shape2, 300.0f));
+			scene->AddActor(std::make_unique<Enemy>(nc::Transform{ nc::Vector2{nc::RandomRange(0.0f, 800.0f), nc::RandomRange(0.0f, 600.0f)}, nc::RandomRange(0.0f, nc::TwoPi), 2.0f }, shape2, 200.0f));
 		}
 		state = eState::Game;
 	}
@@ -96,9 +96,8 @@ void Game::Draw(Core::Graphics& graphics)
 	graphics.DrawString(30, 20, std::to_string(score).c_str());
 	graphics.DrawString(750, 20, std::to_string(lives).c_str());
 
-
 	scene->Draw(graphics);
-	engine->Get<nc::ParticleSystem>()->Draw(graphics);
+	engine->Draw(graphics);
 }
 
 void Game::UpdateTitle(float dt)
@@ -128,11 +127,12 @@ void Game::UpdateStartLevel(float dt)
 
 void Game::OnAddPoints(const nc::Event& event)
 {
-	score += 100;
+	score += std::get<int>(event.data);
 }
 
 void Game::OnPlayerDead(const nc::Event& event)
 {
 	lives--;
+	std::cout << std::get<std::string>(event.data) << std::endl;
 	state = eState::GameOver;
 }
