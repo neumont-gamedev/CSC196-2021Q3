@@ -16,6 +16,7 @@
 
 // framework
 #include "Framework/EventSystem.h"
+#include "Framework/ResourceSystem.h"
 
 // objects
 #include "Base/Actor.h"
