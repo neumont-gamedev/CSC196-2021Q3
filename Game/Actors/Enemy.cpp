@@ -37,6 +37,8 @@ void Enemy::Update(float dt)
 	transform.position += nc::Vector2::Rotate(nc::Vector2::right, transform.rotation) * speed * dt;
 	transform.position.x = nc::Wrap(transform.position.x, 0.0f, 800.0f);
 	transform.position.y = nc::Wrap(transform.position.y, 0.0f, 600.0f);
+
+	transform.Update();
 }
 
 void Enemy::OnCollision(Actor* actor)

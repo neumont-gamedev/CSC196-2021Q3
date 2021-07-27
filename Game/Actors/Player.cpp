@@ -35,6 +35,8 @@ void Player::Update(float dt)
 	}
 
 	scene->engine->Get<nc::ParticleSystem>()->Create(transform.position, 3, 2, nc::Color::white, 50);
+	
+	transform.Update();
 }
 
 void Player::OnCollision(Actor* actor)
