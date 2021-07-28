@@ -4,6 +4,21 @@
 #include "Engine.h"
 #include <memory>
 
+Player::Player(const nc::Transform& transform, std::shared_ptr<nc::Shape> shape, float speed) : nc::Actor{ transform, shape }, speed{ speed } 
+{
+	std::unique_ptr locator = std::make_unique<Actor>();
+	locator->transform.localPosition = nc::Vector2{ -8, 0 };
+	AddChild(std::move(locator));
+
+	locator = std::make_unique<Actor>();
+	locator->transform.localPosition = nc::Vector2{ 0, 5 };
+	AddChild(std::move(locator));
+
+	locator = std::make_unique<Actor>();
+	locator->transform.localPosition = nc::Vector2{ 0, -5 };
+	AddChild(std::move(locator));
+}
+
 void Player::Update(float dt)
 {
 	Actor::Update(dt);
@@ -24,19 +39,28 @@ void Player::Update(float dt)
 	{
 		fireTimer = fireRate;
 
-		nc::Transform t = transform;
-		t.scale = 2;
+		{
+			nc::Transform t = children[1]->transform;
+			t.scale = 2;
 
-		std::unique_ptr<Projectile> projectile = std::make_unique<Projectile>(t, scene->engine->Get<nc::ResourceSystem>()->Get<nc::Shape>("rocket.txt"), 600.0f);
-		projectile->tag = "Player";
-		scene->AddActor(std::move(projectile));
+			std::unique_ptr<Projectile> projectile = std::make_unique<Projectile>(t, scene->engine->Get<nc::ResourceSystem>()->Get<nc::Shape>("rocket.txt"), 600.0f);
+			projectile->tag = "Player";
+			scene->AddActor(std::move(projectile));
+		}
+
+		{
+			nc::Transform t = children[2]->transform;
+			t.scale = 2;
+
+			std::unique_ptr<Projectile> projectile = std::make_unique<Projectile>(t, scene->engine->Get<nc::ResourceSystem>()->Get<nc::Shape>("rocket.txt"), 600.0f);
+			projectile->tag = "Player";
+			scene->AddActor(std::move(projectile));
+		}
 
 		scene->engine->Get<nc::AudioSystem>()->PlayAudio("player_fire");
 	}
 
 	scene->engine->Get<nc::ParticleSystem>()->Create(transform.position, 3, 2, nc::Color::white, 50);
-	
-	transform.Update();
 }
 
 void Player::OnCollision(Actor* actor)

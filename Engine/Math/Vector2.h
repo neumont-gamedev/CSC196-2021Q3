@@ -9,6 +9,7 @@ namespace nc
 		float x, y;
 
 		Vector2() : x{ 0 }, y{ 0 } {}
+		Vector2(float x) : x{ x }, y{ x } {}
 		Vector2(float x, float y) : x{ x }, y{ y } {}
 		Vector2(int x, int y) : x{ static_cast<float>(x) }, y{ static_cast<float>(y) } {}
 
