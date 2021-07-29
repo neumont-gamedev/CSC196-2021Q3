@@ -16,6 +16,8 @@ namespace nc
 		{
 			shape->Draw(graphics, transform);
 		}
+
+		std::for_each(children.begin(), children.end(), [graphics](auto& child) mutable { if (child->shape) child->shape->Draw(graphics, child->transform); });
 	}
 
 	float Actor::GetRadius()

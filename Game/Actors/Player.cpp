@@ -6,8 +6,13 @@
 
 Player::Player(const nc::Transform& transform, std::shared_ptr<nc::Shape> shape, float speed) : nc::Actor{ transform, shape }, speed{ speed } 
 {
+}
+
+void Player::Initialize()
+{
 	std::unique_ptr locator = std::make_unique<Actor>();
 	locator->transform.localPosition = nc::Vector2{ -8, 0 };
+	locator->transform.localRotation = nc::DegToRad(180);
 	AddChild(std::move(locator));
 
 	locator = std::make_unique<Actor>();
@@ -17,11 +22,17 @@ Player::Player(const nc::Transform& transform, std::shared_ptr<nc::Shape> shape,
 	locator = std::make_unique<Actor>();
 	locator->transform.localPosition = nc::Vector2{ 0, -5 };
 	AddChild(std::move(locator));
+
+	std::unique_ptr engine = std::make_unique<Actor>(nc::Transform{}, scene->engine->Get<nc::ResourceSystem>()->Get<nc::Shape>("engine.txt"));
+	engine->transform.localPosition = nc::Vector2{ -8, 0 };
+	AddChild(std::move(engine));
 }
 
 void Player::Update(float dt)
 {
 	Actor::Update(dt);
+
+	children[3]->transform.localRotation += 5 * dt;
 
 	// movement
 	float thrust = 0;
@@ -29,7 +40,18 @@ void Player::Update(float dt)
 	if (Core::Input::IsPressed('D')) transform.rotation += 5 * dt;
 	if (Core::Input::IsPressed('W')) thrust = speed;
 
-	transform.position += nc::Vector2::Rotate(nc::Vector2::right, transform.rotation) * thrust * dt;
+	// acceleration
+	nc::Vector2 acceleration;
+	acceleration += nc::Vector2::Rotate(nc::Vector2::right, transform.rotation) * thrust;
+	//nc::Vector2 gravity = (nc::Vector2{ 400, 300 } - transform.position).Normalized() * 50;
+	//nc::Vector2 gravity = nc::Vector2::down * 50;
+	//acceleration += gravity;
+
+	velocity += acceleration * dt;
+	transform.position += velocity * dt;
+
+	velocity *= 0.985f; // damping
+
 	transform.position.x = nc::Wrap(transform.position.x, 0.0f, 800.0f);
 	transform.position.y = nc::Wrap(transform.position.y, 0.0f, 600.0f);
 
@@ -60,7 +82,8 @@ void Player::Update(float dt)
 		scene->engine->Get<nc::AudioSystem>()->PlayAudio("player_fire");
 	}
 
-	scene->engine->Get<nc::ParticleSystem>()->Create(transform.position, 3, 2, nc::Color::white, 50);
+	std::vector<nc::Color> colors = { nc::Color::white, nc::Color::blue, nc::Color::red };
+	scene->engine->Get<nc::ParticleSystem>()->Create(children[0]->transform.position, 3, 2,colors, 50, children[0]->transform.rotation, nc::DegToRad(30));
 }
 
 void Player::OnCollision(Actor* actor)
